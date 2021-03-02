@@ -1,32 +1,31 @@
 package main
 
 import (
-    "fmt"
-    "crypto/sha256"
-    "os"
-    "io/ioutil"
+	"crypto/sha256"
+	"fmt"
+	"os"
 )
 
 func sha256sum(d []byte) []byte {
-    h := sha256.New()
-    h.Write(d)
-    return h.Sum(nil)
+	h := sha256.New()
+	h.Write(d)
+	return h.Sum(nil)
 }
 
-func main(){
-    f := ""
-    if len(os.Args) == 2 {
-        f = os.Args[1]
-    }
-    
-    contents, err := ioutil.ReadFile(f)
+func main() {
+	f := ""
+	if len(os.Args) == 2 {
+		f = os.Args[1]
+	}
 
-    if err != nil {
-        fmt.Println("Error opening file", f, err)
-        os.Exit(1)
-    }
+	contents, err := os.ReadFile(f)
 
-    sum := sha256sum(contents)
+	if err != nil {
+		fmt.Println("Error opening file", f, err)
+		os.Exit(1)
+	}
 
-    fmt.Println(fmt.Sprintf("%x", sum))
+	sum := sha256sum(contents)
+
+	fmt.Println(fmt.Sprintf("%x", sum))
 }
